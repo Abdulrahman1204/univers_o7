@@ -10,7 +10,7 @@ class CtrlStudentController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.id !== req.params.id) {
-        throw new ForbiddenError("غير مصرح لك ");
+        throw new ForbiddenError("غير مصرح لك");
       }
 
       const studentProfile = await CtrlStudentService.getProfileStudent(
@@ -25,7 +25,7 @@ class CtrlStudentController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.id !== req.params.id) {
-        throw new ForbiddenError("غير مصرح لك ");
+        throw new ForbiddenError("غير مصرح لك");
       }
 
       const result = await CtrlStudentService.updateProfileStudent(
@@ -41,7 +41,7 @@ class CtrlStudentController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.role !== "superAdmin") {
-        throw new ForbiddenError("غير مصرح لك ");
+        throw new ForbiddenError("غير مصرح لك");
       }
 
       const result = await CtrlStudentService.updateProfileStudentBySuperAdmin(
@@ -57,7 +57,7 @@ class CtrlStudentController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.id !== req.params.id) {
-        throw new ForbiddenError("غير مصرح لك ");
+        throw new ForbiddenError("غير مصرح لك");
       }
 
       const result = await CtrlStudentService.updateProfilePhotoStudent(
@@ -73,7 +73,7 @@ class CtrlStudentController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.role !== "superAdmin") {
-        throw new ForbiddenError("غير مصرح لك ");
+        throw new ForbiddenError("غير مصرح لك");
       }
 
       const students = await CtrlStudentService.getAllStudents();
@@ -86,7 +86,7 @@ class CtrlStudentController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.role !== "superAdmin" && user?.id !== req.params.id) {
-        throw new ForbiddenError("غير مصرح لك ");
+        throw new ForbiddenError("غير مصرح لك");
       }
 
       const result = await CtrlStudentService.deleteStudent(user?.id);

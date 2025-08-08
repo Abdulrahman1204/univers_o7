@@ -10,7 +10,7 @@ class CtrlAdminController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.id !== req.params.id) {
-        throw new ForbiddenError("غير مصرح لك ");
+        throw new ForbiddenError("غير مصرح لك");
       }
 
       const adminProfile = await CtrlAdminService.getProfileAdmin(user?.id);
@@ -23,7 +23,7 @@ class CtrlAdminController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.id !== req.params.id) {
-        throw new ForbiddenError("غير مصرح لك ");
+        throw new ForbiddenError("غير مصرح لك");
       }
 
       const result = await CtrlAdminService.updateProfileAdmin(
@@ -39,7 +39,7 @@ class CtrlAdminController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.role !== "superAdmin") {
-        throw new ForbiddenError("غير مصرح لك ");
+        throw new ForbiddenError("غير مصرح لك");
       }
 
       const result = await CtrlAdminService.updateProfileAdminBySuperAdmin(
@@ -55,7 +55,7 @@ class CtrlAdminController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.id !== req.params.id) {
-        throw new ForbiddenError("غير مصرح لك ");
+        throw new ForbiddenError("غير مصرح لك");
       }
 
       const result = await CtrlAdminService.updateProfilePhotoAdmin(
@@ -71,7 +71,7 @@ class CtrlAdminController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.role !== "superAdmin") {
-        throw new ForbiddenError("غير مصرح لك ");
+        throw new ForbiddenError("غير مصرح لك");
       }
 
       const admins = await CtrlAdminService.getAllAdmins();
@@ -84,7 +84,7 @@ class CtrlAdminController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.role !== "superAdmin" && user?.id !== req.params.id) {
-        throw new ForbiddenError("غير مصرح لك ");
+        throw new ForbiddenError("غير مصرح لك");
       }
 
       const result = await CtrlAdminService.deleteAdmin(user?.id);

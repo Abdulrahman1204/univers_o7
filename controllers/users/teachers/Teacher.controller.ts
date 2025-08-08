@@ -10,7 +10,7 @@ class CtrlTeacherController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.id !== req.params.id) {
-        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+        throw new ForbiddenError("غير مصرح لك");
       }
 
       const teacherProfile = await CtrlTeacherService.getProfileTeacher(
@@ -25,7 +25,7 @@ class CtrlTeacherController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.id !== req.params.id) {
-        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+        throw new ForbiddenError("غير مصرح لك");
       }
 
       const result = await CtrlTeacherService.updateProfileTeacher(
@@ -41,7 +41,7 @@ class CtrlTeacherController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.role !== "superAdmin") {
-        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+        throw new ForbiddenError("غير مصرح لك");
       }
 
       const result = await CtrlTeacherService.updateProfileTeacherBySuperAdmin(
@@ -57,7 +57,7 @@ class CtrlTeacherController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.id !== req.params.id) {
-        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+        throw new ForbiddenError("غير مصرح لك");
       }
 
       const result = await CtrlTeacherService.updateProfilePhotoTeacher(
@@ -73,7 +73,7 @@ class CtrlTeacherController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.role !== "superAdmin") {
-        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+        throw new ForbiddenError("غير مصرح لك");
       }
 
       const teachers = await CtrlTeacherService.getAllTeachers();
@@ -86,7 +86,7 @@ class CtrlTeacherController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.role !== "superAdmin" && user?.id !== req.params.id) {
-        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+        throw new ForbiddenError("غير مصرح لك");
       }
 
       const result = await CtrlTeacherService.deleteTeacher(user?.id);
