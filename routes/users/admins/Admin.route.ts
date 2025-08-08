@@ -8,7 +8,7 @@ const router = Router();
 
 // ~ GET /api/ctrl/admin/:id ~ Get Profile Admin
 router
-  .route("/:id")
+  .route("/")
   .get(
     verifyToken,
     checkRole(["superAdmin", "admin", "sales"]),

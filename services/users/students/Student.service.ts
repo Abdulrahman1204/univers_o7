@@ -17,6 +17,7 @@ class CtrlStudentService {
     const existingHaveStudent = await student
       .findById(id)
       .select("-password -createdAt -updatedAt -__v");
+
     if (!existingHaveStudent) {
       throw new BadRequestError("المستخدم غير موجود");
     }
