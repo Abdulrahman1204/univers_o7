@@ -10,14 +10,23 @@ import compression from "compression";
 // .env
 dotenv.config();
 
-// routes import
+// routes
+
+// Auth
 import authAdminRouter from "./routes/users/admins/Auth.route";
 import authStudentRouter from "./routes/users/students/Auth.route";
 import authTeacherRouter from "./routes/users/teachers/Auth.route";
+
+// Users
 import ctrlAdminRouter from "./routes/users/admins/Admin.route";
 import ctrlStudentRouter from "./routes/users/students/Student.route";
 import ctrlTeacherRouter from "./routes/users/teachers/Teacher.route";
+
+// Logout
 import logoutRouter from "./routes/users/logout.route";
+
+// Class
+import classRoute from "./routes/exam/class/Class.route";
 
 // Validate required environment variables
 ["MONGO_URL", "JWT_SECRET_KEY", "NODE_ENV", "PORT"].forEach((env) => {
@@ -61,13 +70,19 @@ app.get("/health", (req: Request, res: Response) => {
 });
 
 // API Routes
+// Auth
 app.use("/api/auth/admin", authAdminRouter);
 app.use("/api/auth/student", authStudentRouter);
 app.use("/api/auth/teacher", authTeacherRouter);
 app.use("/api/auth", logoutRouter);
+
+// Users
 app.use("/api/ctrl/admin", ctrlAdminRouter);
 app.use("/api/ctrl/student", ctrlStudentRouter);
 app.use("/api/ctrl/teacher", ctrlTeacherRouter);
+
+// Class
+app.use("/api/classes", classRoute);
 
 // Error Handler Middleware
 app.use(notFound);

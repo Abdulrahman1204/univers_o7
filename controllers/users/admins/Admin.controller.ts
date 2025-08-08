@@ -2,15 +2,15 @@ import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 import { AuthenticatedRequest, ICloudinaryFile } from "../../../utils/types";
 import { CtrlAdminService } from "../../../services/users/admins/Admin.service";
-import { ForbiddenError } from "../../../middlewares/handleErrors";
+import { ForbiddenError, NotFoundError } from "../../../middlewares/handleErrors";
 
 class CtrlAdminController {
   // ~ Get => /api/ctrl/admin/:id ~ Get Profile Admin
   getProfileAdmin = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
-      if (user?.id !== req.params.id) {
-        throw new ForbiddenError("غير مصرح لك");
+      if (!user) {
+        throw new NotFoundError('Error: Token Not Found')
       }
 
       const adminProfile = await CtrlAdminService.getProfileAdmin(user?.id);

@@ -2,15 +2,18 @@ import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 import { AuthenticatedRequest, ICloudinaryFile } from "../../../utils/types";
 import { CtrlStudentService } from "../../../services/users/students/Student.service";
-import { ForbiddenError } from "../../../middlewares/handleErrors";
+import {
+  ForbiddenError,
+  NotFoundError,
+} from "../../../middlewares/handleErrors";
 
 class CtrlStudentController {
   // ~ Get => /api/ctrl/student/:id ~ Get Profile Student
   getProfileStudent = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
-      if (user?.id !== req.params.id) {
-        throw new ForbiddenError("غير مصرح لك");
+      if (!user) {
+        throw new NotFoundError("Error: Token Not Found");
       }
 
       const studentProfile = await CtrlStudentService.getProfileStudent(
