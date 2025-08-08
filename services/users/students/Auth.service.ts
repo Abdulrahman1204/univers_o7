@@ -72,9 +72,6 @@ class AuthStudentService {
       throw new BadRequestError("البريد الإلكتروني أو كلمة المرور غير صحيحة");
     }
 
-    console.log({isPasswordValid: isPasswordValid})
-
-
     const token = generateJWT({
       userName: existingHaveStudent.userName,
       id: (existingHaveStudent._id as Types.ObjectId).toString(),
