@@ -51,7 +51,7 @@ app.use(
 
 // Routes
 app.get("/", (req: Request, res: Response) => {
-  res.send("API is running in Captal");
+  res.send("API is running in Univers_07");
 });
 app.get("/health", (req: Request, res: Response) => {
   res.status(200).json({
