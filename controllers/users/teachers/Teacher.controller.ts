@@ -1,0 +1,67 @@
+import { Request, Response } from "express";
+import asyncHandler from "express-async-handler";
+import { ICloudinaryFile } from "../../../utils/types";
+import { CtrlTeacherService } from "../../../services/users/teachers/Teacher.service";
+
+class CtrlTeacherController {
+  // ~ Get => /api/ctrl/teacher/:id ~ Get Profile Teacher
+  getProfileTeacher = asyncHandler(
+    async (req: Request, res: Response): Promise<void> => {
+      const teacherProfile = await CtrlTeacherService.getProfileTeacher(
+        req.params.id
+      );
+      res.status(200).json(teacherProfile);
+    }
+  );
+
+  // ~ Put => /api/ctrl/teacher/updateaccount/:id ~ Update Teacher
+  updateProfileTeacher = asyncHandler(
+    async (req: Request, res: Response): Promise<void> => {
+      const result = await CtrlTeacherService.updateProfileTeacher(
+        req.body,
+        req.params.id
+      );
+      res.status(200).json({ message: result.message });
+    }
+  );
+
+  // ~ Put => /api/ctrl/teacher/updateaccountbysuperadmin/:id ~ Update Teacher
+  updateProfileTeacherBySuperAdmin = asyncHandler(
+    async (req: Request, res: Response): Promise<void> => {
+      const result = await CtrlTeacherService.updateProfileTeacherBySuperAdmin(
+        req.body,
+        req.params.id
+      );
+      res.status(200).json({ message: result.message });
+    }
+  );
+
+  // ~ Put => /api/ctrl/teacher/updateprofilephoto/:id ~ Update Profile Photo Teacher
+  updateProfilePhotoTeacher = asyncHandler(
+    async (req: Request, res: Response): Promise<void> => {
+      const result = await CtrlTeacherService.updateProfilePhotoTeacher(
+        req.file as ICloudinaryFile,
+        req.params.id
+      );
+      res.status(200).json({ message: result.message });
+    }
+  );
+
+  // ~ Get => /api/ctrl/teachers ~ Get All Teachers
+  getAllTeachers = asyncHandler(
+    async (req: Request, res: Response): Promise<void> => {
+      const teachers = await CtrlTeacherService.getAllTeachers();
+      res.status(200).json(teachers);
+    }
+  );
+
+  // ~ Delete => /api/ctrl/teacher/:id ~ Delete Teacher
+  deleteTeacher = asyncHandler(
+    async (req: Request, res: Response): Promise<void> => {
+      const result = await CtrlTeacherService.deleteTeacher(req.params.id);
+      res.status(200).json({ message: result.message });
+    }
+  );
+}
+
+export const ctrlTeacherController = new CtrlTeacherController();
