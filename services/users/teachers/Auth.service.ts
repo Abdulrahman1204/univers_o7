@@ -32,7 +32,7 @@ class AuthTeacherService {
       profilePhotoUrl = file.path;
     }
 
-    const newUser = await teacher.create({
+    await teacher.create({
       profilePhoto: profilePhotoUrl,
       userName: teacherData.userName,
       age: teacherData.age,
@@ -41,13 +41,7 @@ class AuthTeacherService {
       gender: teacherData.gender,
     });
 
-    const token = generateJWT({
-      userName: newUser.userName,
-      id: (newUser._id as Types.ObjectId).toString(),
-      role: "teacher",
-    });
-
-    return { token, message: "تم إنشاء الحساب بنجاح" };
+    return { message: "تم إنشاء الحساب بنجاح" };
   }
 
   // ~ Post => /api/auth/teacher/login ~ login Teacher

@@ -1,24 +1,22 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
-import { ICloudinaryFile } from "../../../utils/types";
+import { AuthenticatedRequest, ICloudinaryFile } from "../../../utils/types";
 import { AuthTeacherService } from "../../../services/users/teachers/Auth.service";
+import { ForbiddenError } from "../../../middlewares/handleErrors";
 
 class AuthTeacherController {
   // ~ Post => /api/auth/teacher/register ~ Create New Teacher
   createNewTeacher = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
+      const user = (req as AuthenticatedRequest).user;
+      if (user?.role !== "superAdmin" && user?.role !== "admin") {
+        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+      }
+
       const result = await AuthTeacherService.createNewTeacher(
         req.body,
         req.file as ICloudinaryFile
       );
-
-      res.cookie("jwtToken", result.token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        path: "/",
-        maxAge: 60 * 60 * 24 * 30 * 1000,
-      });
 
       res.status(201).json({ message: result.message });
     }

@@ -1,24 +1,22 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 import { AuthAdminService } from "../../../services/users/admins/Auth.service";
-import { ICloudinaryFile } from "../../../utils/types";
+import { AuthenticatedRequest, ICloudinaryFile } from "../../../utils/types";
+import { ForbiddenError } from "../../../middlewares/handleErrors";
 
 class AuthAdminController {
   // ~ Post => /api/auth/admin/register ~ Create New Admin
   createNewAdmin = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
+      const user = (req as AuthenticatedRequest).user;
+      if (user?.role !== "superAdmin") {
+        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+      }
+
       const result = await AuthAdminService.createNewAdmin(
         req.body,
         req.file as ICloudinaryFile
       );
-
-      res.cookie("jwtToken", result.token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        path: "/",
-        maxAge: 60 * 60 * 24 * 30 * 1000,
-      });
 
       res.status(201).json({ message: result.message });
     }

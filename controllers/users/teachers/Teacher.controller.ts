@@ -1,12 +1,18 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
-import { ICloudinaryFile } from "../../../utils/types";
+import { AuthenticatedRequest, ICloudinaryFile } from "../../../utils/types";
 import { CtrlTeacherService } from "../../../services/users/teachers/Teacher.service";
+import { ForbiddenError } from "../../../middlewares/handleErrors";
 
 class CtrlTeacherController {
   // ~ Get => /api/ctrl/teacher/:id ~ Get Profile Teacher
   getProfileTeacher = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
+      const user = (req as AuthenticatedRequest).user;
+      if (user?.id !== req.params.id) {
+        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+      }
+
       const teacherProfile = await CtrlTeacherService.getProfileTeacher(
         req.params.id
       );
@@ -17,6 +23,11 @@ class CtrlTeacherController {
   // ~ Put => /api/ctrl/teacher/updateaccount/:id ~ Update Teacher
   updateProfileTeacher = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
+      const user = (req as AuthenticatedRequest).user;
+      if (user?.id !== req.params.id) {
+        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+      }
+
       const result = await CtrlTeacherService.updateProfileTeacher(
         req.body,
         req.params.id
@@ -28,6 +39,11 @@ class CtrlTeacherController {
   // ~ Put => /api/ctrl/teacher/updateaccountbysuperadmin/:id ~ Update Teacher
   updateProfileTeacherBySuperAdmin = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
+      const user = (req as AuthenticatedRequest).user;
+      if (user?.role !== "superAdmin") {
+        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+      }
+
       const result = await CtrlTeacherService.updateProfileTeacherBySuperAdmin(
         req.body,
         req.params.id
@@ -39,6 +55,11 @@ class CtrlTeacherController {
   // ~ Put => /api/ctrl/teacher/updateprofilephoto/:id ~ Update Profile Photo Teacher
   updateProfilePhotoTeacher = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
+      const user = (req as AuthenticatedRequest).user;
+      if (user?.id !== req.params.id) {
+        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+      }
+
       const result = await CtrlTeacherService.updateProfilePhotoTeacher(
         req.file as ICloudinaryFile,
         req.params.id
@@ -50,6 +71,11 @@ class CtrlTeacherController {
   // ~ Get => /api/ctrl/teachers ~ Get All Teachers
   getAllTeachers = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
+      const user = (req as AuthenticatedRequest).user;
+      if (user?.role !== "superAdmin") {
+        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+      }
+
       const teachers = await CtrlTeacherService.getAllTeachers();
       res.status(200).json(teachers);
     }
@@ -58,6 +84,11 @@ class CtrlTeacherController {
   // ~ Delete => /api/ctrl/teacher/:id ~ Delete Teacher
   deleteTeacher = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
+      const user = (req as AuthenticatedRequest).user;
+      if (user?.role !== "superAdmin" && user?.id !== req.params.id) {
+        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+      }
+
       const result = await CtrlTeacherService.deleteTeacher(req.params.id);
       res.status(200).json({ message: result.message });
     }

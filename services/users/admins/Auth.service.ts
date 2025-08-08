@@ -32,7 +32,7 @@ class AuthAdminService {
       profilePhotoUrl = file.path;
     }
 
-    const newUser = await admin.create({
+    await admin.create({
       profilePhoto: profilePhotoUrl,
       userName: adminData.userName,
       age: adminData.age,
@@ -42,13 +42,7 @@ class AuthAdminService {
       role: adminData.role,
     });
 
-    const token = generateJWT({
-      userName: newUser.userName,
-      id: (newUser._id as Types.ObjectId).toString(),
-      role: "admin",
-    });
-
-    return { token, message: "تم إنشاء الحساب بنجاح" };
+    return { message: "تم إنشاء الحساب بنجاح" };
   }
 
   // ~ Post => /api/auth/admin/login ~ login Admin
