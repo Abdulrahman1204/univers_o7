@@ -4,7 +4,7 @@ import { IStudent } from "./dtos";
 import bcrypt from "bcrypt";
 
 // Student Schema
-const studentSchema = new Schema(
+const studentSchema: Schema<IStudent> = new Schema(
   {
     profilePhoto: {
       type: String,

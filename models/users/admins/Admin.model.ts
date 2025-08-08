@@ -4,7 +4,7 @@ import { IAdmin } from "./dtos";
 import bcrypt from "bcrypt";
 
 // Admin Schema
-const adminSchema = new Schema(
+const adminSchema: Schema<IAdmin> = new Schema(
   {
     profilePhoto: {
       type: String,

@@ -8,7 +8,7 @@ export interface IStudent extends Document {
   phoneNumber: string;
   password: string;
   gender: "male" | "female";
-  question: Types.ObjectId[];
+  questions: Types.ObjectId[];
   exams: Types.ObjectId[];
   purchasedUnits: Types.ObjectId[];
   purchasedCourses: Types.ObjectId[];

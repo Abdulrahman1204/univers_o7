@@ -8,6 +8,6 @@ export interface ITeacher extends Document {
   phoneNumber: string;
   password: string;
   gender: "male" | "female";
-  question: Types.ObjectId[];
+  questions: Types.ObjectId[];
   subject: Types.ObjectId;
 }

@@ -4,7 +4,7 @@ import { ITeacher } from "./dtos";
 import bcrypt from "bcrypt";
 
 // Teacher Schema
-const teacherSchema = new Schema(
+const teacherSchema: Schema<ITeacher> = new Schema(
   {
     profilePhoto: {
       type: String,
@@ -49,7 +49,7 @@ const teacherSchema = new Schema(
     subject: {
       type: Schema.Types.ObjectId,
       ref: "Level",
-      default: null
+      default: null,
     },
     questions: [
       {
@@ -247,5 +247,5 @@ export {
   validateUpdateProfilePhotoTeacher,
   validateUpdateTeacher,
   validateUpdateTeacherByAdmins,
-  validateLoginTeacher
+  validateLoginTeacher,
 };
