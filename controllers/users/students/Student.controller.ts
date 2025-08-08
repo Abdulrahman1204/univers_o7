@@ -10,11 +10,11 @@ class CtrlStudentController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.id !== req.params.id) {
-        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+        throw new ForbiddenError("غير مصرح لك ");
       }
 
       const studentProfile = await CtrlStudentService.getProfileStudent(
-        req.params.id
+        user?.id
       );
       res.status(200).json(studentProfile);
     }
@@ -25,12 +25,12 @@ class CtrlStudentController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.id !== req.params.id) {
-        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+        throw new ForbiddenError("غير مصرح لك ");
       }
 
       const result = await CtrlStudentService.updateProfileStudent(
         req.body,
-        req.params.id
+        user?.id
       );
       res.status(200).json({ message: result.message });
     }
@@ -41,12 +41,12 @@ class CtrlStudentController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.role !== "superAdmin") {
-        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+        throw new ForbiddenError("غير مصرح لك ");
       }
 
       const result = await CtrlStudentService.updateProfileStudentBySuperAdmin(
         req.body,
-        req.params.id
+        user?.id
       );
       res.status(200).json({ message: result.message });
     }
@@ -57,12 +57,12 @@ class CtrlStudentController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.id !== req.params.id) {
-        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+        throw new ForbiddenError("غير مصرح لك ");
       }
 
       const result = await CtrlStudentService.updateProfilePhotoStudent(
         req.file as ICloudinaryFile,
-        req.params.id
+        user?.id
       );
       res.status(200).json({ message: result.message });
     }
@@ -73,7 +73,7 @@ class CtrlStudentController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.role !== "superAdmin") {
-        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+        throw new ForbiddenError("غير مصرح لك ");
       }
 
       const students = await CtrlStudentService.getAllStudents();
@@ -86,10 +86,10 @@ class CtrlStudentController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.role !== "superAdmin" && user?.id !== req.params.id) {
-        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+        throw new ForbiddenError("غير مصرح لك ");
       }
 
-      const result = await CtrlStudentService.deleteStudent(req.params.id);
+      const result = await CtrlStudentService.deleteStudent(user?.id);
       res.status(200).json({ message: result.message });
     }
   );

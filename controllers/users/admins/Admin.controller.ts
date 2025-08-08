@@ -10,12 +10,10 @@ class CtrlAdminController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.id !== req.params.id) {
-        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+        throw new ForbiddenError("غير مصرح لك ");
       }
 
-      const adminProfile = await CtrlAdminService.getProfileAdmin(
-        req.params.id
-      );
+      const adminProfile = await CtrlAdminService.getProfileAdmin(user?.id);
       res.status(200).json(adminProfile);
     }
   );
@@ -25,12 +23,12 @@ class CtrlAdminController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.id !== req.params.id) {
-        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+        throw new ForbiddenError("غير مصرح لك ");
       }
 
       const result = await CtrlAdminService.updateProfileAdmin(
         req.body,
-        req.params.id
+        user?.id
       );
       res.status(200).json({ message: result.message });
     }
@@ -41,12 +39,12 @@ class CtrlAdminController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.role !== "superAdmin") {
-        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+        throw new ForbiddenError("غير مصرح لك ");
       }
 
       const result = await CtrlAdminService.updateProfileAdminBySuperAdmin(
         req.body,
-        req.params.id
+        user?.id
       );
       res.status(200).json({ message: result.message });
     }
@@ -57,12 +55,12 @@ class CtrlAdminController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.id !== req.params.id) {
-        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+        throw new ForbiddenError("غير مصرح لك ");
       }
 
       const result = await CtrlAdminService.updateProfilePhotoAdmin(
         req.file as ICloudinaryFile,
-        req.params.id
+        user?.id
       );
       res.status(200).json({ message: result.message });
     }
@@ -73,7 +71,7 @@ class CtrlAdminController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.role !== "superAdmin") {
-        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+        throw new ForbiddenError("غير مصرح لك ");
       }
 
       const admins = await CtrlAdminService.getAllAdmins();
@@ -86,10 +84,10 @@ class CtrlAdminController {
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
       if (user?.role !== "superAdmin" && user?.id !== req.params.id) {
-        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
+        throw new ForbiddenError("غير مصرح لك ");
       }
 
-      const result = await CtrlAdminService.deleteAdmin(req.params.id);
+      const result = await CtrlAdminService.deleteAdmin(user?.id);
       res.status(200).json({ message: result.message });
     }
   );

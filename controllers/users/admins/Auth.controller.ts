@@ -8,11 +8,6 @@ class AuthAdminController {
   // ~ Post => /api/auth/admin/register ~ Create New Admin
   createNewAdmin = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
-      const user = (req as AuthenticatedRequest).user;
-      if (user?.role !== "superAdmin") {
-        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
-      }
-
       const result = await AuthAdminService.createNewAdmin(
         req.body,
         req.file as ICloudinaryFile

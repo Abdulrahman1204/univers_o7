@@ -8,11 +8,6 @@ class AuthTeacherController {
   // ~ Post => /api/auth/teacher/register ~ Create New Teacher
   createNewTeacher = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
-      const user = (req as AuthenticatedRequest).user;
-      if (user?.role !== "superAdmin" && user?.role !== "admin") {
-        throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
-      }
-
       const result = await AuthTeacherService.createNewTeacher(
         req.body,
         req.file as ICloudinaryFile

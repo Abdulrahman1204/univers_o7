@@ -14,7 +14,7 @@ class CtrlTeacherController {
       }
 
       const teacherProfile = await CtrlTeacherService.getProfileTeacher(
-        req.params.id
+        user?.id
       );
       res.status(200).json(teacherProfile);
     }
@@ -30,7 +30,7 @@ class CtrlTeacherController {
 
       const result = await CtrlTeacherService.updateProfileTeacher(
         req.body,
-        req.params.id
+        user?.id
       );
       res.status(200).json({ message: result.message });
     }
@@ -46,7 +46,7 @@ class CtrlTeacherController {
 
       const result = await CtrlTeacherService.updateProfileTeacherBySuperAdmin(
         req.body,
-        req.params.id
+        user?.id
       );
       res.status(200).json({ message: result.message });
     }
@@ -62,7 +62,7 @@ class CtrlTeacherController {
 
       const result = await CtrlTeacherService.updateProfilePhotoTeacher(
         req.file as ICloudinaryFile,
-        req.params.id
+        user?.id
       );
       res.status(200).json({ message: result.message });
     }
@@ -89,7 +89,7 @@ class CtrlTeacherController {
         throw new ForbiddenError("غير مصرح لك بتقييد الحساب");
       }
 
-      const result = await CtrlTeacherService.deleteTeacher(req.params.id);
+      const result = await CtrlTeacherService.deleteTeacher(user?.id);
       res.status(200).json({ message: result.message });
     }
   );
