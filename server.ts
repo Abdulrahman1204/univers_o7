@@ -25,8 +25,9 @@ import ctrlTeacherRouter from "./routes/users/teachers/Teacher.route";
 // Logout
 import logoutRouter from "./routes/users/logout.route";
 
-// Class
+// exam
 import classRoute from "./routes/exam/class/Class.route";
+import subjectRoute from './routes/exam/subject/Subject.route'
 
 // Validate required environment variables
 ["MONGO_URL", "JWT_SECRET_KEY", "NODE_ENV", "PORT"].forEach((env) => {
@@ -81,8 +82,10 @@ app.use("/api/ctrl/admin", ctrlAdminRouter);
 app.use("/api/ctrl/student", ctrlStudentRouter);
 app.use("/api/ctrl/teacher", ctrlTeacherRouter);
 
-// Class
-app.use("/api/classes", classRoute);
+// exam
+app.use("/api/class", classRoute);
+app.use("/api/subject", subjectRoute);
+
 
 // Error Handler Middleware
 app.use(notFound);

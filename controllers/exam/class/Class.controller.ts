@@ -27,7 +27,7 @@ class ClassController {
       req.params.id,
       req.body
     );
-    res.status(200).json(updatedClass);
+    res.status(200).json({ message: "تم تحديث بيانات الصف" });
   });
 
   // ~ DELETE /api/classes/:id ~ Delete Class

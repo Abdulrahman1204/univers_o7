@@ -2,6 +2,7 @@ import mongoose, { Schema, Model } from "mongoose";
 import joi from "joi";
 import { IClass } from "./dtos";
 import bcrypt from "bcrypt";
+import { Subject } from "../subject/Subject.model";
 // Class Schema
 const ClassSchema: Schema<IClass> = new Schema(
   {
@@ -15,8 +16,36 @@ const ClassSchema: Schema<IClass> = new Schema(
   },
   {
     timestamps: true,
+    toJSON: {
+      virtuals: true,
+      transform: (doc, ret) => {
+        delete ret.id;
+        return ret;
+      },
+    },
+    toObject: {
+      virtuals: true,
+      transform: (doc, ret) => {
+        delete ret.id;
+        return ret;
+      },
+    },
   }
 );
+
+// Subjects
+ClassSchema.virtual("subjects", {
+  ref: "Subject",
+  foreignField: "class",
+  localField: "_id",
+});
+
+// delete subject that connect with class
+ClassSchema.post("findOneAndDelete", async function (doc) {
+  if (doc) {
+    await Subject.deleteMany({ class: doc._id });
+  }
+});
 
 // Class Model
 const Class: Model<IClass> = mongoose.model<IClass>("Class", ClassSchema);

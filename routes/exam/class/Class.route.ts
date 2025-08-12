@@ -1,17 +1,37 @@
 import { Router } from "express";
 import { classController } from "../../../controllers/exam/class/Class.controller";
+import verifyToken from "../../../middlewares/verifyToken";
+import checkRole from "../../../middlewares/checkRole";
 
 const router = Router();
 
 // Public routes
-router.route("/").get(classController.getAllClasses);
+router.route("/").get(verifyToken, classController.getAllClasses);
 
-router.route("/").post(classController.createClass);
+router
+  .route("/")
+  .post(
+    verifyToken,
+    checkRole(["superAdmin", "admin"]),
+    classController.createClass
+  );
 
 router
   .route("/:id")
-  .get(classController.getClass)
-  .put(classController.updateClass)
-  .delete(classController.deleteClass);
+  .get(
+    verifyToken,
+    checkRole(["superAdmin", "admin"]),
+    classController.getClass
+  )
+  .put(
+    verifyToken,
+    checkRole(["superAdmin", "admin"]),
+    classController.updateClass
+  )
+  .delete(
+    verifyToken,
+    checkRole(["superAdmin", "admin"]),
+    classController.deleteClass
+  );
 
 export default router;

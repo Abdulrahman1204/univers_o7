@@ -26,14 +26,14 @@ class ClassService {
 
   // ~ GET /api/classes/:id ~ Get Class
   static async getClass(id: string) {
-    const classObj = await Class.findById(id);
+    const classObj = await Class.findById(id).populate('subjects', 'subjectName -class');
     if (!classObj) throw new NotFoundError("الصف غير موجود");
     return classObj;
   }
 
   // ~ GET /api/classes ~ Get All Classes
   static async getAllClasses() {
-    const classes = await Class.find();
+    const classes = await Class.find().populate('subjects', 'subjectName -class');
     if (!classes.length) throw new NotFoundError("لا توجد صفوف متاحة");
     return classes;
   }
