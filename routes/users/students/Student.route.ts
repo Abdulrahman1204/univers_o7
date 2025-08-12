@@ -48,7 +48,7 @@ router
 
 // Get All Students
 router
-  .route("/")
+  .route("/all")
   .get(
     verifyToken,
     checkRole(["superAdmin"]),

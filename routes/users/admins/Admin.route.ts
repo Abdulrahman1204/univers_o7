@@ -45,7 +45,7 @@ router
 
 // ~ GET /api/ctrl/admins ~ Get All Admins
 router
-  .route("/")
+  .route("/all")
   .get(
     verifyToken,
     checkRole(["superAdmin"]),
