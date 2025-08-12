@@ -70,7 +70,7 @@ class AuthAdminService {
     const token = generateJWT({
       userName: existingHaveAdmin.userName,
       id: (existingHaveAdmin._id as Types.ObjectId).toString(),
-      role: "admin",
+      role: existingHaveAdmin.role,
     });
 
     return { token, message: "تم تسجيل الدخول بنجاح" };
