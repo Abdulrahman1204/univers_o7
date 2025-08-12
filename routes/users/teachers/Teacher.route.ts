@@ -8,7 +8,7 @@ const router = Router();
 
 // Teacher Profile Routes
 router
-  .route("/")
+  .route("/:id")
   .get(
     verifyToken,
     checkRole(["teacher"]),

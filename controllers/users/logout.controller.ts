@@ -7,8 +7,9 @@ class AuthLogoutController {
     res.clearCookie("jwtToken", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+      sameSite: "strict",
       path: "/",
+      maxAge: 60 * 60 * 24 * 30 * 1000,
     });
 
     res.status(200).json({

@@ -75,6 +75,7 @@ class CtrlTeacherController {
   getAllTeachers = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
       const user = (req as AuthenticatedRequest).user;
+      console.log(user)
       if (user?.role !== "superAdmin") {
         throw new ForbiddenError("غير مصرح لك");
       }

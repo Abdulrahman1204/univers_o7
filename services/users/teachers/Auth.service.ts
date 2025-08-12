@@ -69,7 +69,7 @@ class AuthTeacherService {
     const token = generateJWT({
       userName: existingHaveTeacher.userName,
       id: (existingHaveTeacher._id as Types.ObjectId).toString(),
-      role: "admin",
+      role: "teacher",
     });
 
     return { token, message: "تم تسجيل الدخول بنجاح" };

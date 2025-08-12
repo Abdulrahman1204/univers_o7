@@ -5,7 +5,6 @@ import { NotFoundError } from "./handleErrors";
 const checkRole = (allowedRoles: string[]): RequestHandler => {
   return (req: Request, res: Response, next: NextFunction): void => {
     const user = (req as AuthenticatedRequest).user;
-
     if (!user || !allowedRoles.includes(user.role)) {
       res
         .status(403)
