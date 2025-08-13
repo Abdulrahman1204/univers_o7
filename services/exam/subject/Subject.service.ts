@@ -7,7 +7,7 @@ import {
   validateSubjectCreate,
   validateSubjectUpdate,
 } from "../../../models/exam/subject/Subject.model";
-import { ISubject } from "../../../models/exam/subject/dto";
+import { ISubject } from "../../../models/exam/subject/dtos";
 import { Class } from "../../../models/exam/class/Class.model";
 
 class SubjectService {
@@ -41,7 +41,7 @@ class SubjectService {
 
   // ~ GET /api/subjects ~ Get All Subjects
   static async getAllSubjects() {
-    const subjects = await Subject.find().populate("class", "className");
+    const subjects = await Subject.find().populate("class", "className").populate('units', 'unitName -subject');
     if (!subjects.length) throw new NotFoundError("لا توجد مواد متاحة");
     return subjects;
   }

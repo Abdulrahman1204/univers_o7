@@ -1,6 +1,6 @@
 import mongoose, { Schema, Model } from "mongoose";
 import joi, { ObjectSchema } from "joi";
-import { ISubject } from "./dto";
+import { ISubject } from "./dtos";
 
 // Subject Schema
 const SubjectSchema: Schema<ISubject> = new Schema(
@@ -20,8 +20,29 @@ const SubjectSchema: Schema<ISubject> = new Schema(
   },
   {
     timestamps: true,
+    toJSON: {
+      virtuals: true,
+      transform: (doc, ret) => {
+        delete ret.id;
+        return ret;
+      },
+    },
+    toObject: {
+      virtuals: true,
+      transform: (doc, ret) => {
+        delete ret.id;
+        return ret;
+      },
+    },
   }
 );
+
+// Units
+SubjectSchema.virtual("units", {
+  ref: "Unit",
+  foreignField: "subject",
+  localField: "_id",
+});
 
 // Subject Model
 const Subject: Model<ISubject> = mongoose.model<ISubject>(
